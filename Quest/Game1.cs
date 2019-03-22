@@ -23,7 +23,6 @@ namespace Quest
         private Color backgroundColor = new Color(100, 100, 150);
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        //private AnimatedSprite hero;
         private Hero hero;
         private Level level;
         private Camera camera;
@@ -58,42 +57,6 @@ namespace Quest
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera(spriteBatch, 0, 0, ScreenWidth, ScreenHeight);
-
-            /*
-            hero = new AnimatedSprite(
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\stationary-right"),
-                    timePerFrame: TimeSpan.FromSeconds(1),
-                    rows: 1,
-                    columns: 3),
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\stationary-left"),
-                    timePerFrame: TimeSpan.FromSeconds(1),
-                    rows: 1,
-                    columns: 3),
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\running-right"),
-                    timePerFrame: TimeSpan.FromMilliseconds(150),
-                    rows: 1,
-                    columns: 4),
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\running-left"),
-                    timePerFrame: TimeSpan.FromMilliseconds(150),
-                    rows: 1,
-                    columns: 4),
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\jumping-right"),
-                    timePerFrame: TimeSpan.FromMilliseconds(150),
-                    rows: 1,
-                    columns: 1),
-                new SpriteSheet(
-                    texture: Content.Load<Texture2D>("Sprites\\jumping-left"),
-                    timePerFrame: TimeSpan.FromMilliseconds(150),
-                    rows: 1,
-                    columns: 1),
-                x: 300, y: 0,
-                width: 46, height: 64);
-                */
 
             this.level = new Level(
                 path: Path.Combine("Levels", "Files", "level1.txt"),
@@ -138,7 +101,6 @@ namespace Quest
             hero.Update(gameTime, level);
             bug.Update(gameTime, level);
             camera.Update(hero.Velocity, hero.Rectangle);
-            //camera.Update(hero.Velocity, hero.SourceRectangle);
 
             base.Update(gameTime);
         }

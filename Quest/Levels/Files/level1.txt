@@ -1,12 +1,12 @@
 11 128
-                                                                                            T
+                                                                                                T
                                                                                         
-                                                                                           DDDD
-                                                   T    T                                D      D
-                                                                                       D          D
- T                          GG                   GGGGGGGGG   GGGGGG      DD                D              D
-        GGG     T           GG     T      T    GGG           GGGGGG     DDD   T          D                  D         T    T
-GGGG  GGGGGGGGG          G  GG  G             GGGG                     GDDD             DD                    D   
-GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG    DDD                      DGGGGGGGGGGGGGGG
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                      DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                      DDDDDDDDDDDDDDDD
+                                                                                               DDDD
+                                                   T    T                                    D      D
+                                                                                            D         D
+ T                          GG                   GGGGGGGGG   GGGGGG      DD                D             D
+        GGG     T           GG     T      T    GGG           GGGGGG     DDD   T          D                 D         T    T
+GGGG  GGGGGGGGG          G  GG  G             GGGG                     GDDD             DD                   D   
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG    DDD                     DGGGGGGGGGGGGGGG
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                     DDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                     DDDDDDDDDDDDDDDD
