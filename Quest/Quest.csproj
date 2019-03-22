@@ -41,7 +41,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Characters\AnimatedSprite.cs" />
     <Compile Include="Physics\IMovable.cs" />
     <Compile Include="Characters\Bug.cs" />
     <Compile Include="Characters\Direction.cs" />

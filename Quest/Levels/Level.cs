@@ -71,12 +71,7 @@ namespace Quest.Levels
 
                     if (tile.SourceRectangle.Intersects(rect))
                     {
-                        tile.Color = Color.Red;
-                        intersection = tile.SourceRectangle;
-                    }
-                    else
-                    {
-                        tile.Color = Color.White;
+                        return tile.SourceRectangle;
                     }
                 }
             }
