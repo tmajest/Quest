@@ -41,6 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Levels\Tiles\DirtTile.cs" />
+    <Compile Include="Levels\Tiles\GrassTile.cs" />
+    <Compile Include="Levels\Tiles\TileFactory.cs" />
+    <Compile Include="Levels\Tiles\TreeTile.cs" />
     <Compile Include="Physics\IMovable.cs" />
     <Compile Include="Characters\Bug.cs" />
     <Compile Include="Characters\Direction.cs" />
@@ -50,7 +54,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Levels\Level.cs" />
-    <Compile Include="Levels\Tile.cs" />
+    <Compile Include="Levels\Tiles\Tile.cs" />
     <Compile Include="Physics\PhysicsConstants.cs" />
     <Compile Include="Physics\PhysicsEngine.cs" />
     <Compile Include="Program.cs" />

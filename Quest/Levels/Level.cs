@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Quest.Levels.Tiles;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,26 +14,25 @@ namespace Quest.Levels
 {
     internal class Level
     {
+        private static readonly int TileWidth = 64;
+        private static readonly int TileHeight = 64;
+
         private String path;
         private int level;
 
         private Tile[][] grid;
         private int rows;
         private int columns;
-        private int tileWidth;
-        private int tileHeight;
 
-        public Rectangle SourceRectangle => new Rectangle(0, 0, columns * tileWidth, rows * tileHeight);
-        public Dictionary<char, Texture2D> textureMap { get; set; }
+        public Rectangle SourceRectangle => new Rectangle(0, 0, columns * TileWidth, rows * TileHeight);
+        public TileFactory tileFactory;
 
-        public Level(String path, Dictionary<char, Texture2D> textureMap, int level)
+        public Level(String path, TileFactory tileFactory, int level)
         {
             this.path = path;
-            this.textureMap = textureMap;
+            this.tileFactory = tileFactory;
             this.level = level;
 
-            this.tileWidth = textureMap.First().Value.Width;
-            this.tileHeight = textureMap.First().Value.Height;
             this.parseGrid();
         }
 
@@ -53,10 +54,10 @@ namespace Quest.Levels
 
         public Rectangle Collides(Rectangle rect)
         {
-            var startX = Math.Max(0, (rect.Top / tileHeight) - 1);
-            var endX = Math.Min(this.rows - 1, (rect.Bottom / tileHeight) + 1);
-            var startY = Math.Max(0, (rect.Left / tileWidth) - 1);
-            var endY = Math.Min(this.columns - 1, (rect.Right / tileWidth) + 1);
+            var startX = Math.Max(0, (rect.Top / TileHeight) - 1);
+            var endX = Math.Min(this.rows - 1, (rect.Bottom / TileHeight) + 1);
+            var startY = Math.Max(0, (rect.Left / TileWidth) - 1);
+            var endY = Math.Min(this.columns - 1, (rect.Right / TileWidth) + 1);
 
             Rectangle intersection = Rectangle.Empty;
             for (var i = startX; i <= endX; i++)
@@ -101,20 +102,12 @@ namespace Quest.Levels
                     }
 
                     var c = line[j];
-                    if (this.textureMap.ContainsKey(c))
+                    if (c != ' ')
                     {
-                        if (c == 'T')
-                        {
-                            var passable2 = true;
-                        }
-                        var texture = this.textureMap[c];
-                        var passable = c == 'T';
-                        this.grid[i][j] = new Tile(texture, passable, j * tileWidth, i * tileHeight);
+                        this.grid[i][j] = tileFactory.Create(c, j * TileWidth, i * TileHeight);
                     }
                 }
             }
         }
-
-
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 using Quest.Characters;
 using Quest.Levels;
+using Quest.Levels.Tiles;
 using Quest.Physics;
 
 namespace Quest
@@ -58,14 +59,16 @@ namespace Quest
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera(spriteBatch, 0, 0, ScreenWidth, ScreenHeight);
 
+            var textureMap = new Dictionary<char, Texture2D>
+            {
+                {'G', GrassTile.GetTexture(Content) },
+                {'D', DirtTile.GetTexture(Content) },
+                {'T', TreeTile.GetTexture(Content) }
+            };
+
             this.level = new Level(
                 path: Path.Combine("Levels", "Files", "level1.txt"),
-                textureMap: new Dictionary<char, Texture2D>
-                {
-                    {'G', Content.Load<Texture2D>("Tiles\\grass3") },
-                    {'D', Content.Load<Texture2D>("Tiles\\dirt3") },
-                    {'T', Content.Load<Texture2D>("Tiles\\tree") },
-                },
+                tileFactory: new TileFactory(textureMap),
                 level: 1);
 
             var physicsEngine = new PhysicsEngine(level);
