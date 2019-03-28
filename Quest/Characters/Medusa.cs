@@ -8,32 +8,32 @@ using Quest.Physics;
 using Quest.Utils;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Quest.Characters
 {
-    internal class Bug : MovingSprite
+    internal class Medusa : MovingSprite
     {
-        private static readonly string WalkingRightPath = Path.Combine("Sprites", "Bug", "bug-right").ToString();
-        private static readonly string WalkingLeftPath = Path.Combine("Sprites", "Bug", "bug-left").ToString();
+        private static readonly string WalkingRightPath = Path.Combine("Sprites", "Medusa", "medusa-right").ToString();
+        private static readonly string WalkingLeftPath = Path.Combine("Sprites", "Medusa", "medusa-left").ToString();
 
-        private static readonly int MaxVelocityX = 2;
+        private static readonly int MaxVelocityX = 1;
 
-        private static readonly Vector2 maxVelocity = new Vector2(MaxVelocityX, 20);
-        private static readonly Vector2 velocity = new Vector2(0, 0);
-        private static readonly Vector2 force = new Vector2(0, 0);
+        private static readonly Vector2 maxVelocity = new Vector2(MaxVelocityX, 5);
+        private static readonly Vector2 velocity = new Vector2(1, 0);
+        private static readonly Vector2 force = new Vector2(1, 0);
 
         private static readonly int SpriteSheetRows = 1;
-        private static readonly int SpriteSheetColumns = 2;
+        private static readonly int SpriteSheetColumns = 6;
 
-        private static readonly int BugWidth = 64;
-        private static readonly int BugHeight = 64;
+        private static readonly int MedusaWidth = 128;
+        private static readonly int MedusaHeight = 128;
 
-        private static TimeSpan WalkTime = TimeSpan.FromMilliseconds(800);
+        private static TimeSpan WalkTime = TimeSpan.FromMilliseconds(200);
 
         private SpriteSheet currentSpriteSheet;
         private SpriteSheet stationaryLeftSpriteSheet;
@@ -43,7 +43,7 @@ namespace Quest.Characters
 
         public override float Friction => 0.02f;
 
-        public Bug(
+        public Medusa(
             SpriteSheet stationaryLeftSheet,
             SpriteSheet stationaryRightSheet,
             SpriteSheet movingLeftSheet,
@@ -61,32 +61,26 @@ namespace Quest.Characters
             this.movingRightSpriteSheet = movingRightSheet;
         }
 
-        public static Bug Build(
+        public static Medusa Build(
             ContentManager content, 
             Vector2 position, 
             Direction direction, 
             PhysicsEngine physicsEngine)
         {
-            return new Bug(
+            return new Medusa(
                 GetStationaryLeftSpriteSheet(content),
                 GetStationaryRightSpriteSheet(content),
                 GetMovingLeftSpriteSheet(content),
                 GetMovingRightSpriteSheet(content),
                 physicsEngine,
                 position,
-                BugWidth,
-                BugHeight,
+                MedusaWidth,
+                MedusaHeight,
                 direction);
         }
 
         public override void Update(GameTime time, Level level)
         {
-            if (time.TotalMilliseconds() % ((long) (WalkTime.TotalMilliseconds * 2)) == 0)
-            {
-                // Apply force to move the bug
-                this.velocityX += this.direction == Direction.Right ? MaxVelocityX : -MaxVelocityX;
-            }
-
             this.UpdateCurrentSpriteSheet(time);
             base.Update(time, level);
         }

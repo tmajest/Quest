@@ -41,6 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Characters\Medusa.cs" />
+    <Compile Include="Characters\Hero\HeroSpriteHelpers.cs" />
     <Compile Include="Levels\Tiles\DirtTile.cs" />
     <Compile Include="Levels\Tiles\GrassTile.cs" />
     <Compile Include="Levels\Tiles\TileFactory.cs" />
@@ -48,7 +50,7 @@
     <Compile Include="Physics\IMovable.cs" />
     <Compile Include="Characters\Bug.cs" />
     <Compile Include="Characters\Direction.cs" />
-    <Compile Include="Characters\Hero.cs" />
+    <Compile Include="Characters\Hero\Hero.cs" />
     <Compile Include="Characters\MovingSprite.cs" />
     <Compile Include="Characters\SpriteSheet.cs" />
     <Compile Include="Camera.cs" />
@@ -69,14 +71,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Sprites\bug-left.png" />
-    <Content Include="Content\Sprites\bug-right.png" />
-    <Content Include="Content\Sprites\jumping-left.png" />
-    <Content Include="Content\Sprites\jumping-right.png" />
-    <Content Include="Content\Sprites\running-left.png" />
-    <Content Include="Content\Sprites\running-right.png" />
-    <Content Include="Content\Sprites\stationary-left.png" />
-    <Content Include="Content\Sprites\stationary-right.png" />
+    <Content Include="Content\Sprites\Bug\bug-left.png" />
+    <Content Include="Content\Sprites\Bug\bug-right.png" />
+    <Content Include="Content\Sprites\Hero\attacking-left.png" />
+    <Content Include="Content\Sprites\Hero\attacking-right.png" />
+    <Content Include="Content\Sprites\Hero\jumping-left.png" />
+    <Content Include="Content\Sprites\Hero\jumping-right.png" />
+    <Content Include="Content\Sprites\Hero\running-left.png" />
+    <Content Include="Content\Sprites\Hero\running-right.png" />
+    <Content Include="Content\Sprites\Hero\stationary-left.png" />
+    <Content Include="Content\Sprites\Hero\stationary-right.png" />
+    <Content Include="Content\Sprites\Medusa\medusa-left.png" />
+    <Content Include="Content\Sprites\Medusa\medusa-right.png" />
     <Content Include="Content\Tiles\dirt.png" />
     <Content Include="Content\Tiles\dirt3.png" />
     <Content Include="Content\Tiles\grass.png" />
@@ -92,7 +98,9 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\AsepriteFiles\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

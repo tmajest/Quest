@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using Quest.Characters;
+using Quest.Characters.Hero;
 using Quest.Levels;
 using Quest.Levels.Tiles;
 using Quest.Physics;
@@ -28,6 +29,7 @@ namespace Quest
         private Level level;
         private Camera camera;
         private Bug bug;
+        private Medusa medusa;
 
         public Game1()
         {
@@ -81,6 +83,7 @@ namespace Quest
                 physicsEngine: physicsEngine);
 
             bug = Bug.Build(Content, new Vector2(1000, 400), Direction.Right, physicsEngine);
+            medusa = Medusa.Build(Content, new Vector2(1000, 300), Direction.Right, physicsEngine);
         }
 
         /// <summary>
@@ -103,6 +106,7 @@ namespace Quest
 
             hero.Update(gameTime, level);
             bug.Update(gameTime, level);
+            medusa.Update(gameTime, level);
             camera.Update(hero.Velocity, hero.Rectangle);
 
             base.Update(gameTime);
@@ -118,7 +122,8 @@ namespace Quest
 
             level.Draw(camera);
             hero.Draw(camera);
-            bug.Draw(camera);
+            //bug.Draw(camera);
+            medusa.Draw(camera);
 
             base.Draw(gameTime);
         }

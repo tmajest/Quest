@@ -13,27 +13,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quest.Characters
+namespace Quest.Characters.Hero
 {
     internal class Hero : MovingSprite
     {
-        private static readonly string StationaryRightPath = Path.Combine("Sprites", "stationary-right").ToString();
-        private static readonly string StationaryLeftPath = Path.Combine("Sprites", "stationary-left").ToString();
-        private static readonly int StationarySheetColumns = 3;
-        private static TimeSpan StationarySpriteTime = TimeSpan.FromSeconds(1);
-
-        private static readonly string RunningRightPath = Path.Combine("Sprites", "running-right").ToString();
-        private static readonly string RunningLeftPath = Path.Combine("Sprites", "running-left").ToString();
-        private static readonly int RunningSheetColumns = 4;
-        private static TimeSpan RunningSpriteTime = TimeSpan.FromMilliseconds(150);
-
-        private static readonly string JumpingRightPath = Path.Combine("Sprites", "jumping-right").ToString();
-        private static readonly string JumpingLeftPath = Path.Combine("Sprites", "jumping-left").ToString();
-        private static readonly int JumpingSheetColumns = 1;
-        private static TimeSpan JumpingSpriteTime = TimeSpan.FromMilliseconds(150);
-
-        private static readonly int SpriteSheetRows = 1;
-
         private static readonly int MaxVelocityX = 6;
         private static readonly int MaxVelocityY = 20;
 
@@ -54,10 +37,13 @@ namespace Quest.Characters
         private SpriteSheet movingRightSpriteSheet;
         private SpriteSheet jumpingLeftSpriteSheet;
         private SpriteSheet jumpingRightSpriteSheet;
+        private SpriteSheet attackingLeftSpriteSheet;
+        private SpriteSheet attackingRightSpriteSheet;
 
         private int jumpsLeft;
         private Keys previousKey;
         private bool jumping;
+        private bool attacking;
 
         public Hero(
             SpriteSheet stationaryLeftSpriteSheet,
@@ -66,6 +52,8 @@ namespace Quest.Characters
             SpriteSheet movingRightSpriteSheet,
             SpriteSheet jumpingLeftSpriteSheet,
             SpriteSheet jumpingRightSpriteSheet,
+            SpriteSheet attackingLeftSpriteSheet,
+            SpriteSheet attackingRightSpriteSheet,
             Vector2 position,
             PhysicsEngine physicsEngine,
             int width, int height,
@@ -78,10 +66,13 @@ namespace Quest.Characters
             this.movingRightSpriteSheet = movingRightSpriteSheet;
             this.jumpingLeftSpriteSheet = jumpingLeftSpriteSheet;
             this.jumpingRightSpriteSheet = jumpingRightSpriteSheet;
+            this.attackingLeftSpriteSheet = attackingLeftSpriteSheet;
+            this.attackingRightSpriteSheet = attackingRightSpriteSheet;
 
             this.jumpsLeft = MaxJumps;
             this.previousKey = Keys.None;
             this.jumping = false;
+            this.attacking = false;
         }
 
         public static Hero Build(
@@ -91,12 +82,14 @@ namespace Quest.Characters
             PhysicsEngine physicsEngine)
         {
             return new Hero(
-                GetStationaryLeftSpriteSheet(content),
-                GetStationaryRightSpriteSheet(content),
-                GetMovingLeftSpriteSheet(content),
-                GetMovingRightSpriteSheet(content),
-                GetJumpingLeftSpriteSheet(content),
-                GetJumpingRightSpriteSheet(content),
+                HeroSpriteHelpers.GetStationaryLeftSpriteSheet(content),
+                HeroSpriteHelpers.GetStationaryRightSpriteSheet(content),
+                HeroSpriteHelpers.GetMovingLeftSpriteSheet(content),
+                HeroSpriteHelpers.GetMovingRightSpriteSheet(content),
+                HeroSpriteHelpers.GetJumpingLeftSpriteSheet(content),
+                HeroSpriteHelpers.GetJumpingRightSpriteSheet(content),
+                HeroSpriteHelpers.GetAttackingLeftSpriteSheet(content),
+                HeroSpriteHelpers.GetAttackingRightSpriteSheet(content),
                 position,
                 physicsEngine,
                 HeroWidth,
@@ -138,6 +131,11 @@ namespace Quest.Characters
                 this.jumpsLeft = MaxJumps;
             }
 
+            else if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking)
+            {
+                this.attacking = true;
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 forceX = this.jumping ? MaxVelocityX / 4 : MaxVelocityX / 2;
@@ -160,7 +158,11 @@ namespace Quest.Characters
 
         private void HandleSpriteSheet(Keys currentKey, GameTime time)
         {
-            if (this.jumping)
+            if (this.attacking)
+            {
+                this.currentSpriteSheet = this.direction == Direction.Right ? attackingRightSpriteSheet : attackingLeftSpriteSheet;
+            }
+            else if (this.jumping)
             {
                 this.currentSpriteSheet = this.direction == Direction.Right ? jumpingRightSpriteSheet : jumpingLeftSpriteSheet;
                 this.currentSpriteSheet.Update(time);
@@ -185,42 +187,6 @@ namespace Quest.Characters
         public override void VerticalCollisionHandler()
         {
             this.jumping = false;
-        }
-
-        private static SpriteSheet GetStationaryLeftSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(StationaryLeftPath);
-            return new SpriteSheet(texture, StationarySpriteTime, SpriteSheetRows, StationarySheetColumns);
-        }
-
-        private static SpriteSheet GetStationaryRightSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(StationaryRightPath);
-            return new SpriteSheet(texture, StationarySpriteTime, SpriteSheetRows, StationarySheetColumns);
-        }
-
-        private static SpriteSheet GetMovingRightSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(RunningRightPath);
-            return new SpriteSheet(texture, RunningSpriteTime, SpriteSheetRows, RunningSheetColumns);
-        }
-
-        private static SpriteSheet GetMovingLeftSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(RunningLeftPath);
-            return new SpriteSheet(texture, RunningSpriteTime, SpriteSheetRows, RunningSheetColumns);
-        }
-
-        private static SpriteSheet GetJumpingLeftSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(JumpingLeftPath);
-            return new SpriteSheet(texture, JumpingSpriteTime, SpriteSheetRows, JumpingSheetColumns);
-        }
-
-        private static SpriteSheet GetJumpingRightSpriteSheet(ContentManager content)
-        {
-            var texture = content.Load<Texture2D>(JumpingRightPath);
-            return new SpriteSheet(texture, JumpingSpriteTime, SpriteSheetRows, JumpingSheetColumns);
         }
     }
 }
