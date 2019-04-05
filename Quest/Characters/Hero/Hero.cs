@@ -17,7 +17,7 @@ namespace Quest.Characters.Hero
 {
     internal class Hero : MovingSprite
     {
-        private static readonly int MaxVelocityX = 6;
+        private static readonly int MaxVelocityX = 5;
         private static readonly int MaxVelocityY = 20;
 
         private static readonly int HeroWidth = 46;
@@ -40,8 +40,9 @@ namespace Quest.Characters.Hero
         private SpriteSheet attackingLeftSpriteSheet;
         private SpriteSheet attackingRightSpriteSheet;
 
-        private int jumpsLeft;
         private Keys previousKey;
+        private HeroState previousState;
+        private int jumpsLeft;
         private bool jumping;
         private bool attacking;
 
@@ -73,6 +74,7 @@ namespace Quest.Characters.Hero
             this.previousKey = Keys.None;
             this.jumping = false;
             this.attacking = false;
+            this.previousState = HeroState.Stationary;
         }
 
         public static Hero Build(
@@ -97,12 +99,12 @@ namespace Quest.Characters.Hero
                 direction);
         }
 
-        public override void Update(GameTime time, Level level)
+        public override void Update(Level level)
         {
-            base.Update(time, level);
+            base.Update(level);
 
             var currentKey = this.HandleInput();
-            this.HandleSpriteSheet(currentKey, time);
+            this.HandleSpriteSheet(currentKey);
 
             this.previousKey = currentKey;
         }
@@ -131,7 +133,7 @@ namespace Quest.Characters.Hero
                 this.jumpsLeft = MaxJumps;
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking)
+            if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking)
             {
                 this.attacking = true;
             }
@@ -156,32 +158,52 @@ namespace Quest.Characters.Hero
             return currentKey;
         }
 
-        private void HandleSpriteSheet(Keys currentKey, GameTime time)
+        private void HandleSpriteSheet(Keys currentKey)
         {
+            HeroState state = HeroState.Stationary;
+
             if (this.attacking)
             {
-                this.currentSpriteSheet = this.direction == Direction.Right ? attackingRightSpriteSheet : attackingLeftSpriteSheet;
+                state = HeroState.Attacking;
+                if (this.previousState != HeroState.Attacking)
+                {
+                    this.currentSpriteSheet = direction == Direction.Right ? attackingRightSpriteSheet : attackingLeftSpriteSheet;
+                    this.currentSpriteSheet.Reset();
+                    state = HeroState.Attacking;
+                }
+                if (this.currentSpriteSheet.Done)
+                {
+                    this.currentSpriteSheet = direction == Direction.Right ? stationaryRightSpriteSheet : stationaryLeftSpriteSheet;
+                    state = HeroState.Stationary;
+                    this.currentSpriteSheet.Reset();
+                    this.attacking = false;
+                }
             }
             else if (this.jumping)
             {
-                this.currentSpriteSheet = this.direction == Direction.Right ? jumpingRightSpriteSheet : jumpingLeftSpriteSheet;
-                this.currentSpriteSheet.Update(time);
+                this.currentSpriteSheet = direction == Direction.Right ? jumpingRightSpriteSheet : jumpingLeftSpriteSheet;
+                state = HeroState.Jumping;
+
+                if (this.previousState != HeroState.Jumping)
+                {
+                    this.currentSpriteSheet.Reset();
+                }
             }
-            else if (Math.Abs(this.velocityX) > 0)
+            else if (this.velocityX != 0)
             {
                 // The character is moving, so select the moving sprite sheet according to which direction we're facing
-                this.currentSpriteSheet = this.direction == Direction.Right ? movingRightSpriteSheet : movingLeftSpriteSheet;
+                this.currentSpriteSheet = direction == Direction.Right ? movingRightSpriteSheet : movingLeftSpriteSheet;
+                state = HeroState.Running;
             }
             else
             {
                 // The character is stationary, default to the stationary sprite sheet
-                this.currentSpriteSheet = this.direction == Direction.Right ? stationaryRightSpriteSheet : stationaryLeftSpriteSheet;
+                this.currentSpriteSheet = direction == Direction.Right ? stationaryRightSpriteSheet : stationaryLeftSpriteSheet;
+                state = HeroState.Stationary;
             }
 
-            if (currentKey == previousKey)
-            {
-                this.currentSpriteSheet.Update(time);
-            }
+            this.currentSpriteSheet.Update();
+            this.previousState = state;
         }
 
         public override void VerticalCollisionHandler()

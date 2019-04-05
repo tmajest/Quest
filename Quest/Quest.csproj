@@ -41,8 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Characters\Hero\HeroState.cs" />
     <Compile Include="Characters\Medusa.cs" />
     <Compile Include="Characters\Hero\HeroSpriteHelpers.cs" />
+    <Compile Include="FrameCounter.cs" />
     <Compile Include="Levels\Tiles\DirtTile.cs" />
     <Compile Include="Levels\Tiles\GrassTile.cs" />
     <Compile Include="Levels\Tiles\TileFactory.cs" />

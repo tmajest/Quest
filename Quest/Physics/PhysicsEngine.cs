@@ -56,7 +56,7 @@ namespace Quest.Physics
                 // must snap the character to the left side of the wall.
                 // If we were moving to the left, we collided with the right side of the wall. Therefore we
                 // must snap the character to the right side of the wall.
-                newX = oldVelX > 0 ? intersection.Left - movable.Rectangle.Width : intersection.Right;
+                newX = newVelocityX > 0 ? intersection.Left - movable.Rectangle.Width - 1 : intersection.Right + 1;
                 movable.Position = new Vector2(newX, movable.Position.Y);
 
                 movable.HorizontalCollisionHandler();
@@ -85,7 +85,7 @@ namespace Quest.Physics
                 // must snap the character to the bottom of the wall.
                 // If we were moving down, we collided with the top of the wall. Therefore we
                 // must snap the character to the top of the wall.
-                newY = oldVelY > 0 ? intersection.Top - movable.Rectangle.Height : intersection.Bottom;
+                newY = newVelocityY > 0 ? intersection.Top - movable.Rectangle.Height - 1 : intersection.Bottom + 1;
 
                 movable.Position = new Vector2(movable.Position.X, newY);
                 movable.Velocity = new Vector2(movable.Velocity.X, 0);

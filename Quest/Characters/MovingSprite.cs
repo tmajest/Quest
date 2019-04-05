@@ -85,7 +85,7 @@ namespace Quest.Characters
         }
 
 
-        public virtual void Update(GameTime time, Level level)
+        public virtual void Update(Level level)
         {
             physicsEngine.Move(this);
         }

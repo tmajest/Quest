@@ -16,26 +16,54 @@ namespace Quest.Characters
 
         private int rows;
         private int columns;
-
         private int totalSpritesPerSheet;
         private int currentSprite;
-        private TimeSpan timePerFrame;
+        private int frameTime;
+        private FrameCounter frameCounter;
 
-        public SpriteSheet(Texture2D texture, TimeSpan timePerFrame, int rows, int columns)
+        private bool loop;
+
+        public bool Done { get; private set; }
+
+        public SpriteSheet(Texture2D texture, int frameTime, int rows, int columns, bool loop)
         {
             this.texture = texture;
             this.rows = rows;
             this.columns = columns;
             this.totalSpritesPerSheet = rows * columns;
             this.currentSprite = 0;
-            this.timePerFrame = timePerFrame;
+            this.frameTime = frameTime;
+            this.loop = loop;
+            this.Done = false;
+            this.frameCounter = new FrameCounter();
         }
 
-        public void Update(GameTime time)
+        public void Reset()
         {
-            if (time.TotalMilliseconds() % (long) timePerFrame.TotalMilliseconds == 0)
+            this.currentSprite = 0;
+            this.frameCounter.Reset();
+            this.Done = false;
+        }
+
+        public void Update()
+        {
+            this.frameCounter.Update();
+
+            if (this.frameCounter.Frame % this.frameTime == 0)
             {
-                this.currentSprite = (this.currentSprite + 1) % totalSpritesPerSheet;
+                this.currentSprite++;
+                if (this.currentSprite >= this.totalSpritesPerSheet)
+                {
+                    if (this.loop)
+                    {
+                        this.Reset();
+                    }
+                    else
+                    {
+                        this.currentSprite = this.totalSpritesPerSheet - 1;
+                        this.Done = true;
+                    }
+                }
             }
         }
 

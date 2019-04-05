@@ -21,6 +21,7 @@ namespace Quest
     {
         private const int ScreenWidth = 1280;
         private const int ScreenHeight = 720;
+        private FrameCounter frameCounter;
 
         private Color backgroundColor = new Color(100, 100, 150);
         private GraphicsDeviceManager graphics;
@@ -39,6 +40,8 @@ namespace Quest
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
+
+            frameCounter = new FrameCounter();
         }
 
         /// <summary>
@@ -104,9 +107,10 @@ namespace Quest
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            hero.Update(gameTime, level);
-            bug.Update(gameTime, level);
-            medusa.Update(gameTime, level);
+            frameCounter.Update();
+            hero.Update(level);
+            //bug.Update(level);
+            //medusa.Update(level);
             camera.Update(hero.Velocity, hero.Rectangle);
 
             base.Update(gameTime);
@@ -123,7 +127,7 @@ namespace Quest
             level.Draw(camera);
             hero.Draw(camera);
             //bug.Draw(camera);
-            medusa.Draw(camera);
+            //medusa.Draw(camera);
 
             base.Draw(gameTime);
         }

@@ -15,7 +15,7 @@ namespace Quest.Levels.Tiles
 
         public Texture2D Texture { get; private set; }
         public Rectangle SourceRectangle { get; private set; }
-        public Color Color { get; private set; }
+        public Color Color { get; set; }
 
         public int X => this.SourceRectangle.X;
         public int Y => this.SourceRectangle.Y;

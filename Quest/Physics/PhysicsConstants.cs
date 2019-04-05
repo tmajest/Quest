@@ -10,5 +10,6 @@ namespace Quest.Physics
     {
         public const float Gravity = 0.8f;
         public const float Friction = 0.4f;
+        public const float Scale = 1.0f;
     }
 }

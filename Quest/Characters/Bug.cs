@@ -33,7 +33,9 @@ namespace Quest.Characters
         private static readonly int BugWidth = 64;
         private static readonly int BugHeight = 64;
 
-        private static TimeSpan WalkTime = TimeSpan.FromMilliseconds(800);
+        private FrameCounter frameCounter;
+
+        private static int WalkTime = 24;
 
         private SpriteSheet currentSpriteSheet;
         private SpriteSheet stationaryLeftSpriteSheet;
@@ -59,6 +61,8 @@ namespace Quest.Characters
             this.stationaryRightSpriteSheet = stationaryRightSheet;
             this.movingLeftSpriteSheet = movingLeftSheet;
             this.movingRightSpriteSheet = movingRightSheet;
+
+            this.frameCounter = new FrameCounter();
         }
 
         public static Bug Build(
@@ -79,19 +83,20 @@ namespace Quest.Characters
                 direction);
         }
 
-        public override void Update(GameTime time, Level level)
+        public override void Update(Level level)
         {
-            if (time.TotalMilliseconds() % ((long) (WalkTime.TotalMilliseconds * 2)) == 0)
+            this.frameCounter.Update();
+            if (this.frameCounter.Frame % WalkTime == 0)
             {
                 // Apply force to move the bug
                 this.velocityX += this.direction == Direction.Right ? MaxVelocityX : -MaxVelocityX;
             }
 
-            this.UpdateCurrentSpriteSheet(time);
-            base.Update(time, level);
+            this.UpdateCurrentSpriteSheet();
+            base.Update(level);
         }
 
-        internal void UpdateCurrentSpriteSheet(GameTime time)
+        internal void UpdateCurrentSpriteSheet()
         {
             if (Math.Abs(this.velocityX) > 0)
             {
@@ -104,7 +109,7 @@ namespace Quest.Characters
                 this.currentSpriteSheet = this.direction == Direction.Right ? stationaryRightSpriteSheet : stationaryLeftSpriteSheet;
             }
 
-            this.currentSpriteSheet.Update(time);
+            this.currentSpriteSheet.Update();
         }
 
         public void Draw(Camera camera)
@@ -124,25 +129,25 @@ namespace Quest.Characters
         internal static SpriteSheet GetMovingLeftSpriteSheet(ContentManager content)
         {
             var texture = content.Load<Texture2D>(WalkingLeftPath);
-            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns);
+            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns, loop: true);
         }
 
         internal static SpriteSheet GetStationaryLeftSpriteSheet(ContentManager content)
         {
             var texture = content.Load<Texture2D>(WalkingLeftPath);
-            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns);
+            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns, loop: true);
         }
 
         internal static SpriteSheet GetMovingRightSpriteSheet(ContentManager content)
         {
             var texture = content.Load<Texture2D>(WalkingRightPath);
-            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns);
+            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns, loop: true);
         }
 
         internal static SpriteSheet GetStationaryRightSpriteSheet(ContentManager content)
         {
             var texture = content.Load<Texture2D>(WalkingRightPath);
-            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns);
+            return new SpriteSheet(texture, WalkTime, SpriteSheetRows, SpriteSheetColumns, loop: true);
         }
     }
 }
