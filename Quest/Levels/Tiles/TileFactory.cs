@@ -32,10 +32,8 @@ namespace Quest.Levels.Tiles
             {
                 return new DirtTile(textureMap['D'], x, y);
             }
-            else
-            {
-                throw new Exception("Tile " + c + " not recognized.");
-            }
+
+            return null;
         }
     }
 }

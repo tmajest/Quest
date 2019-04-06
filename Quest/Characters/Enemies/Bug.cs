@@ -14,10 +14,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quest.Characters
+namespace Quest.Characters.Enemies
 {
     internal class Bug : MovingSprite
     {
+        public static readonly int BugWidth = 64;
+        public static readonly int BugHeight = 64;
+
         private static readonly string WalkingRightPath = Path.Combine("Sprites", "Bug", "bug-right").ToString();
         private static readonly string WalkingLeftPath = Path.Combine("Sprites", "Bug", "bug-left").ToString();
 
@@ -29,9 +32,6 @@ namespace Quest.Characters
 
         private static readonly int SpriteSheetRows = 1;
         private static readonly int SpriteSheetColumns = 2;
-
-        private static readonly int BugWidth = 64;
-        private static readonly int BugHeight = 64;
 
         private FrameCounter frameCounter;
 
@@ -112,7 +112,7 @@ namespace Quest.Characters
             this.currentSpriteSheet.Update();
         }
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             camera.Begin();
             this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y);

@@ -90,6 +90,11 @@ namespace Quest.Characters
             physicsEngine.Move(this);
         }
 
+        public virtual void Draw(Camera camera)
+        {
+            physicsEngine.Move(this);
+        }
+
         public virtual void HorizontalCollisionHandler()
         {
             // Do nothing for base class

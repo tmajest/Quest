@@ -29,8 +29,7 @@ namespace Quest
         private Hero hero;
         private Level level;
         private Camera camera;
-        private Bug bug;
-        private Medusa medusa;
+        private List<MovingSprite> enemies;
 
         public Game1()
         {
@@ -72,21 +71,19 @@ namespace Quest
             };
 
             this.level = new Level(
+                content: Content,
                 path: Path.Combine("Levels", "Files", "level1.txt"),
                 tileFactory: new TileFactory(textureMap),
+                enemyFactory: new EnemyFactory(),
                 level: 1);
 
-            var physicsEngine = new PhysicsEngine(level);
-
+            this.enemies = level.Enemies;
 
             hero = Hero.Build(
                 content: Content,
                 position: new Vector2(300, 0),
                 direction: Direction.Right,
-                physicsEngine: physicsEngine);
-
-            bug = Bug.Build(Content, new Vector2(1000, 400), Direction.Right, physicsEngine);
-            medusa = Medusa.Build(Content, new Vector2(1000, 300), Direction.Right, physicsEngine);
+                physicsEngine: level.PhysicsEngine);
         }
 
         /// <summary>
@@ -109,8 +106,7 @@ namespace Quest
 
             frameCounter.Update();
             hero.Update(level);
-            //bug.Update(level);
-            //medusa.Update(level);
+            enemies.ForEach(enemy => enemy.Update(this.level));
             camera.Update(hero.Velocity, hero.Rectangle);
 
             base.Update(gameTime);
@@ -126,8 +122,7 @@ namespace Quest
 
             level.Draw(camera);
             hero.Draw(camera);
-            //bug.Draw(camera);
-            //medusa.Draw(camera);
+            enemies.ForEach(enemy => enemy.Draw(camera));
 
             base.Draw(gameTime);
         }

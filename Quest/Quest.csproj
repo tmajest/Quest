@@ -42,15 +42,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Characters\Hero\HeroState.cs" />
-    <Compile Include="Characters\Medusa.cs" />
+    <Compile Include="Characters\Enemies\Medusa.cs" />
     <Compile Include="Characters\Hero\HeroSpriteHelpers.cs" />
     <Compile Include="FrameCounter.cs" />
+    <Compile Include="Levels\EnemyFactory.cs" />
     <Compile Include="Levels\Tiles\DirtTile.cs" />
     <Compile Include="Levels\Tiles\GrassTile.cs" />
     <Compile Include="Levels\Tiles\TileFactory.cs" />
     <Compile Include="Levels\Tiles\TreeTile.cs" />
     <Compile Include="Physics\IMovable.cs" />
-    <Compile Include="Characters\Bug.cs" />
+    <Compile Include="Characters\Enemies\Bug.cs" />
     <Compile Include="Characters\Direction.cs" />
     <Compile Include="Characters\Hero\Hero.cs" />
     <Compile Include="Characters\MovingSprite.cs" />

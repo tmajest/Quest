@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quest.Characters
+namespace Quest.Characters.Enemies
 {
     internal class Medusa : MovingSprite
     {
@@ -101,7 +101,7 @@ namespace Quest.Characters
             this.currentSpriteSheet.Update();
         }
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             camera.Begin();
             this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y);

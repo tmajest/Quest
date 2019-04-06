@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
+using Quest.Characters;
 using Quest.Levels.Tiles;
+using Quest.Physics;
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace Quest.Levels
         private static readonly int TileWidth = 64;
         private static readonly int TileHeight = 64;
 
+        private ContentManager content;
         private String path;
         private int level;
 
@@ -25,13 +28,21 @@ namespace Quest.Levels
         private int columns;
 
         public Rectangle SourceRectangle => new Rectangle(0, 0, columns * TileWidth, rows * TileHeight);
-        public TileFactory tileFactory;
+        public PhysicsEngine PhysicsEngine { get; private set; }
+        public List<MovingSprite> Enemies { get; private set; }
 
-        public Level(String path, TileFactory tileFactory, int level)
+        private TileFactory tileFactory;
+        private EnemyFactory enemyFactory;
+
+        public Level(ContentManager content, String path, TileFactory tileFactory, EnemyFactory enemyFactory, int level)
         {
+            this.content = content;
             this.path = path;
             this.tileFactory = tileFactory;
+            this.enemyFactory = enemyFactory;
             this.level = level;
+            this.PhysicsEngine = new PhysicsEngine(this);
+            this.Enemies = new List<MovingSprite>();
 
             this.parseGrid();
         }
@@ -109,7 +120,19 @@ namespace Quest.Levels
                     var c = line[j];
                     if (c != ' ')
                     {
-                        this.grid[i][j] = tileFactory.Create(c, j * TileWidth, i * TileHeight);
+                        var tile = this.tileFactory.Create(c, j * TileWidth, i * TileHeight);
+                        if (tile != null)
+                        {
+                            this.grid[i][j] = tile;
+                        }
+                        else
+                        {
+                            var enemy = this.enemyFactory.Create(this.PhysicsEngine, this.content, c, j * TileWidth, i * TileHeight);
+                            if (enemy != null)
+                            {
+                                this.Enemies.Add(enemy);
+                            }
+                        }
                     }
                 }
             }

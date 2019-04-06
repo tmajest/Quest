@@ -109,7 +109,7 @@ namespace Quest.Characters.Hero
             this.previousKey = currentKey;
         }
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             camera.Begin();
             this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y);
@@ -136,6 +136,7 @@ namespace Quest.Characters.Hero
             if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking)
             {
                 this.attacking = true;
+                forceX = (direction == Direction.Right) ? MaxVelocityX : -MaxVelocityX;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
