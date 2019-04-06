@@ -11,6 +11,7 @@ namespace Quest.Characters.Hero
         Stationary,
         Running,
         Jumping,
-        Attacking
+        Attacking,
+        FinishingAttacking,
     }
 }

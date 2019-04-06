@@ -27,12 +27,23 @@ namespace Quest.Physics
 
         private void MoveHorizontal(IMovable movable)
         {
-            var oldVelX = movable.Velocity.X;
+            var newVelocityX = movable.Velocity.X;
+
+            if (movable.Force.X != 0)
+            {
+                newVelocityX += movable.Force.X;
+                movable.Force = new Vector2(0, movable.Force.Y);
+            }
 
             // Add forces in the horizontal direction to update horizontal velocity. Use Clamp() function to ensure that
             // the new velocity doesn't exceed the max velocity in either direction
-            var newVelocityX = movable.Velocity.X + movable.Force.X;
             newVelocityX = MathHelper.Clamp(newVelocityX, -movable.MaxVelocity.X, movable.MaxVelocity.X);
+
+            if (movable.Damaged && movable.DamageForce.X != 0)
+            {
+                newVelocityX += movable.DamageForce.X;
+                movable.DamageForce = new Vector2(0, movable.DamageForce.Y);
+            }
 
             // Add friction to reduce velocity if we're not stationary
             if (movable.Velocity.X != 0)
@@ -41,6 +52,7 @@ namespace Quest.Physics
                     ? Math.Max(0, newVelocityX - movable.Friction)
                     : Math.Min(0, newVelocityX + movable.Friction);
             }
+
             movable.Velocity = new Vector2(newVelocityX, movable.Velocity.Y);
 
             // Update our X position according to our horizontal velocity
@@ -65,12 +77,16 @@ namespace Quest.Physics
 
         internal virtual void MoveVertical(IMovable movable)
         {
-            var oldVelY = movable.Velocity.Y;
-
             // Add forces in the vertical direction to update vertical velocity. Use Clamp() function to ensure that
             // the new velocity doesn't exceed the max velocity in either direction
             var newVelocityY = MathHelper.Clamp(movable.Velocity.Y + movable.Force.Y + movable.Gravity, -movable.MaxVelocity.Y, movable.MaxVelocity.Y);
             movable.Velocity = new Vector2(movable.Velocity.X, newVelocityY);
+
+            if (movable.Damaged && movable.DamageForce.Y != 0)
+            {
+                newVelocityY += movable.DamageForce.Y;
+                movable.DamageForce = new Vector2(movable.DamageForce.X, 0);
+            }
 
             // Update Y position according to Y velocity
             var newY = movable.Position.Y + newVelocityY;

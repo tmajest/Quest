@@ -14,9 +14,12 @@ namespace Quest.Physics
         Vector2 Velocity { get; set; }
         Vector2 MaxVelocity { get; set; }
         Vector2 Force { get; set; }
+        Vector2 DamageForce { get; set; }
 
         float Gravity { get; }
         float Friction { get; }
+
+        bool Damaged { get; }
 
         Rectangle Rectangle { get; }
 

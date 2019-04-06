@@ -34,7 +34,7 @@ namespace Quest.Characters.Hero
         private static readonly string AttackingRightPath = Path.Combine("Sprites", "Hero", "attacking-right").ToString();
         private static readonly string AttackingLeftPath = Path.Combine("Sprites", "Hero", "attacking-left").ToString();
         private static readonly int AttackingSheetColumns = 3;
-        private static int AttackingSpriteTime = 10;
+        private static int AttackingSpriteTime = 6;
 
 
         public static SpriteSheet GetStationaryLeftSpriteSheet(ContentManager content)

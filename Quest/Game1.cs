@@ -23,7 +23,7 @@ namespace Quest
         private const int ScreenHeight = 720;
         private FrameCounter frameCounter;
 
-        private Color backgroundColor = new Color(100, 100, 150);
+        private Color backgroundColor = new Color(70, 100, 120);
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Hero hero;
@@ -36,6 +36,7 @@ namespace Quest
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";

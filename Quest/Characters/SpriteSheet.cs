@@ -17,13 +17,13 @@ namespace Quest.Characters
         private int rows;
         private int columns;
         private int totalSpritesPerSheet;
-        private int currentSprite;
         private int frameTime;
         private FrameCounter frameCounter;
 
         private bool loop;
 
         public bool Done { get; private set; }
+        public int CurrentSprite { get; private set; }
 
         public SpriteSheet(Texture2D texture, int frameTime, int rows, int columns, bool loop)
         {
@@ -31,16 +31,17 @@ namespace Quest.Characters
             this.rows = rows;
             this.columns = columns;
             this.totalSpritesPerSheet = rows * columns;
-            this.currentSprite = 0;
             this.frameTime = frameTime;
             this.loop = loop;
-            this.Done = false;
             this.frameCounter = new FrameCounter();
+
+            this.Done = false;
+            this.CurrentSprite = 0;
         }
 
         public void Reset()
         {
-            this.currentSprite = 0;
+            this.CurrentSprite = 0;
             this.frameCounter.Reset();
             this.Done = false;
         }
@@ -51,8 +52,8 @@ namespace Quest.Characters
 
             if (this.frameCounter.Frame % this.frameTime == 0)
             {
-                this.currentSprite++;
-                if (this.currentSprite >= this.totalSpritesPerSheet)
+                this.CurrentSprite++;
+                if (this.CurrentSprite >= this.totalSpritesPerSheet)
                 {
                     if (this.loop)
                     {
@@ -60,7 +61,7 @@ namespace Quest.Characters
                     }
                     else
                     {
-                        this.currentSprite = this.totalSpritesPerSheet - 1;
+                        this.CurrentSprite = this.totalSpritesPerSheet - 1;
                         this.Done = true;
                     }
                 }
@@ -72,8 +73,8 @@ namespace Quest.Characters
             var width = this.texture.Width / this.columns;
             var height = this.texture.Height / this.rows;
 
-            var row = this.currentSprite / this.columns;
-            var column = this.currentSprite % this.columns;
+            var row = this.CurrentSprite / this.columns;
+            var column = this.CurrentSprite % this.columns;
 
             var sourceRectangle = new Rectangle(width * column, height * row, width, height);
             var destinationRectangle = new Rectangle(x, y, width, height);

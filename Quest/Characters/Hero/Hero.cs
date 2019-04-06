@@ -45,6 +45,7 @@ namespace Quest.Characters.Hero
         private int jumpsLeft;
         private bool jumping;
         private bool attacking;
+        private bool finishAttacking;
 
         public Hero(
             SpriteSheet stationaryLeftSpriteSheet,
@@ -74,6 +75,7 @@ namespace Quest.Characters.Hero
             this.previousKey = Keys.None;
             this.jumping = false;
             this.attacking = false;
+            this.finishAttacking = false;
             this.previousState = HeroState.Stationary;
         }
 
@@ -103,10 +105,9 @@ namespace Quest.Characters.Hero
         {
             base.Update(level);
 
-            var currentKey = this.HandleInput();
-            this.HandleSpriteSheet(currentKey);
-
-            this.previousKey = currentKey;
+            this.HandleInput();
+            this.HandleSpriteSheet();
+            this.HandleAttacks(level.Enemies);
         }
 
         public override void Draw(Camera camera)
@@ -116,11 +117,16 @@ namespace Quest.Characters.Hero
             camera.End();
         }
 
-        private Keys HandleInput()
+        private void HandleInput()
         {
-            Keys currentKey;
             this.forceY = 0;
             this.forceX = 0;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking && !this.finishAttacking)
+            {
+                this.attacking = true;
+                return;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && this.jumpsLeft > 0)
             {
@@ -128,43 +134,30 @@ namespace Quest.Characters.Hero
                 this.forceY = JumpForce;
                 this.jumping = true;
             }
-            else if (Keyboard.GetState().IsKeyUp(Keys.Space) && !this.jumping && this.jumpsLeft == 0)
+            else if (Keyboard.GetState().IsKeyUp(Keys.Space) && !this.jumping && !this.attacking && this.jumpsLeft == 0)
             {
                 this.jumpsLeft = MaxJumps;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.F) && !this.attacking)
-            {
-                this.attacking = true;
-                forceX = (direction == Direction.Right) ? MaxVelocityX : -MaxVelocityX;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !this.attacking)
             {
                 forceX = this.jumping ? MaxVelocityX / 4 : MaxVelocityX / 2;
-                currentKey = Keys.Right;
                 this.direction = Direction.Right;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left) && !this.attacking)
             {
                 forceX = this.jumping ? -MaxVelocityX / 4 : -MaxVelocityX / 2;
-                currentKey = Keys.Left;
                 this.direction = Direction.Left;
             }
-            else
-            {
-                currentKey = Keys.None;
-            }
-
-            return currentKey;
         }
 
-        private void HandleSpriteSheet(Keys currentKey)
+        private void HandleSpriteSheet()
         {
             HeroState state = HeroState.Stationary;
 
             if (this.attacking)
             {
+                //System.Diagnostics.Debug.WriteLine("Frame: {0}", this.currentSpriteSheet.FrameCounter.Frame);
                 state = HeroState.Attacking;
                 if (this.previousState != HeroState.Attacking)
                 {
@@ -172,12 +165,20 @@ namespace Quest.Characters.Hero
                     this.currentSpriteSheet.Reset();
                     state = HeroState.Attacking;
                 }
-                if (this.currentSpriteSheet.Done)
+                else if (this.currentSpriteSheet.CurrentSprite == 1)
+                {
+                    forceX = (direction == Direction.Right) ? MaxVelocityX / 2 : -MaxVelocityX / 2;
+                }
+                else if (this.currentSpriteSheet.Done)
                 {
                     this.currentSpriteSheet = direction == Direction.Right ? stationaryRightSpriteSheet : stationaryLeftSpriteSheet;
                     state = HeroState.Stationary;
                     this.currentSpriteSheet.Reset();
                     this.attacking = false;
+                }
+                else
+                {
+                    forceX = 0;
                 }
             }
             else if (this.jumping)
@@ -205,6 +206,44 @@ namespace Quest.Characters.Hero
 
             this.currentSpriteSheet.Update();
             this.previousState = state;
+        }
+
+        private void HandleAttacks(List<MovingSprite> enemies)
+        {
+            if (!this.attacking || this.currentSpriteSheet.CurrentSprite == 0)
+            {
+                return;
+            }
+
+            foreach (var enemy in enemies)
+            {
+                if (AttackLanded(enemy))
+                {
+                    enemy.Damage();
+                    if (this.direction == Direction.Right)
+                    {
+                        enemy.DamageForce = new Vector2(50, -20);
+                    }
+                    else
+                    {
+                        enemy.DamageForce = new Vector2(-50, -20);
+                    }
+                }
+            }
+        }
+
+        private bool AttackLanded(MovingSprite enemy)
+        {
+            if (enemy.Damaged)
+            {
+                return false;
+            }
+
+            var attackRectangle = this.direction == Direction.Right
+                ? new Rectangle(this.Rectangle.X - 20, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height)
+                : new Rectangle(this.Rectangle.X + 20, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height);
+
+            return attackRectangle.Intersects(enemy.Rectangle);
         }
 
         public override void VerticalCollisionHandler()

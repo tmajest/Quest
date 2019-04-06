@@ -15,6 +15,8 @@ namespace Quest.Characters
 {
     internal class MovingSprite : IMovable
     {
+        private static readonly int TotalInvincibilityFrames = 30;
+
         protected float x;
         protected float y;
         protected float velocityX;
@@ -23,6 +25,8 @@ namespace Quest.Characters
         protected float maxVelocityY;
         protected float forceX { get; set; }
         protected float forceY { get; set; }
+        protected float damageForceX { get; set; }
+        protected float damageForceY { get; set; }
         protected Direction direction;
 
         private int width;
@@ -53,6 +57,15 @@ namespace Quest.Characters
             get { return new Vector2(this.forceX, this.forceY); }
             set { this.forceX = value.X; this.forceY = value.Y; }
         }
+
+        public Vector2 DamageForce
+        {
+            get { return new Vector2(this.damageForceX, this.damageForceY); }
+            set { this.damageForceX = value.X; this.damageForceY = value.Y; }
+        }
+
+        public bool Damaged { get; set; }
+        private int invincibleFrames = 0;
 
         public virtual float Gravity => PhysicsConstants.Gravity;
         public virtual float Friction => PhysicsConstants.Friction;
@@ -88,11 +101,25 @@ namespace Quest.Characters
         public virtual void Update(Level level)
         {
             physicsEngine.Move(this);
+            if (this.Damaged && invincibleFrames > 0)
+            {
+                invincibleFrames--;
+                if (invincibleFrames == 0)
+                {
+                    this.Damaged = false;
+                }
+            }
         }
 
         public virtual void Draw(Camera camera)
         {
             physicsEngine.Move(this);
+        }
+
+        public void Damage()
+        {
+            this.Damaged = true;
+            this.invincibleFrames = TotalInvincibilityFrames;
         }
 
         public virtual void HorizontalCollisionHandler()

@@ -23,7 +23,7 @@ namespace Quest.Levels
             }
             else if (c == 'M')
             {
-                return Medusa.Build(content, new Vector2(x, y), Direction.Left, engine);
+                return Medusa.Build(content, new Vector2(x, y), Direction.Right, engine);
             }
 
             return null;
