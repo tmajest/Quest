@@ -15,7 +15,7 @@ namespace Quest.Levels
 {
     internal class EnemyFactory
     {
-        public MovingSprite Create(PhysicsEngine engine, ContentManager content, char c, int x, int y)
+        public Character Create(PhysicsEngine engine, ContentManager content, char c, int x, int y)
         {
             if (c == 'B')
             {

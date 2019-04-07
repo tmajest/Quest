@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
+using Quest.Characters;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Quest.Physics
 {
-    public interface IMovable
+    internal interface IMovable
     {
         Vector2 Position { get; set; }
         Vector2 Velocity { get; set; }
@@ -19,7 +21,7 @@ namespace Quest.Physics
         float Gravity { get; }
         float Friction { get; }
 
-        bool Damaged { get; }
+        HealthState HealthState { get; }
 
         Rectangle Rectangle { get; }
 

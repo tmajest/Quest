@@ -16,8 +16,11 @@ using System.Threading.Tasks;
 
 namespace Quest.Characters.Enemies
 {
-    internal class Medusa : MovingSprite
+    internal class Medusa : Character
     {
+        private static readonly int TotalInvincibilityFrames = 15;
+        private static readonly int MaxHealth = 5;
+
         private static readonly string WalkingRightPath = Path.Combine("Sprites", "Medusa", "medusa-right").ToString();
         private static readonly string WalkingLeftPath = Path.Combine("Sprites", "Medusa", "medusa-left").ToString();
 
@@ -33,7 +36,6 @@ namespace Quest.Characters.Enemies
         private static int WalkTime = 6;
         private static readonly int MedusaWidth = 128;
         private static readonly int MedusaHeight = 128;
-
 
         private SpriteSheet currentSpriteSheet;
         private SpriteSheet stationaryLeftSpriteSheet;
@@ -52,7 +54,8 @@ namespace Quest.Characters.Enemies
             Vector2 position,
             int width, int height,
             Direction direction) 
-            : base(position, velocity, maxVelocity, force, physicsEngine, width, height, direction)
+            : base(position, velocity, maxVelocity, force, physicsEngine, width, height, MaxHealth, 
+                  TotalInvincibilityFrames, direction)
         {
             this.currentSpriteSheet = stationaryRightSheet;
             this.stationaryLeftSpriteSheet = stationaryLeftSheet;
@@ -104,7 +107,7 @@ namespace Quest.Characters.Enemies
         public override void Draw(Camera camera)
         {
             camera.Begin();
-            this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y);
+            this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y, this.Color);
             camera.End();
         }
 

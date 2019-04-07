@@ -15,8 +15,10 @@ using System.Threading.Tasks;
 
 namespace Quest.Characters.Hero
 {
-    internal class Hero : MovingSprite
+    internal class Hero : Character
     {
+        private static readonly int TotalInvincibilityFrames = 30;
+        private static readonly int MaxHealth = 3;
         private static readonly int MaxVelocityX = 5;
         private static readonly int MaxVelocityY = 20;
 
@@ -40,7 +42,6 @@ namespace Quest.Characters.Hero
         private SpriteSheet attackingLeftSpriteSheet;
         private SpriteSheet attackingRightSpriteSheet;
 
-        private Keys previousKey;
         private HeroState previousState;
         private int jumpsLeft;
         private bool jumping;
@@ -60,7 +61,8 @@ namespace Quest.Characters.Hero
             PhysicsEngine physicsEngine,
             int width, int height,
             Direction direction)
-            : base(position, velocity, maxVelocity, force, physicsEngine, width, height, direction)
+            : base(position, velocity, maxVelocity, force, physicsEngine, width, height, MaxHealth, 
+                  TotalInvincibilityFrames, direction)
         {
             this.stationaryLeftSpriteSheet = stationaryLeftSpriteSheet;
             this.stationaryRightSpriteSheet = stationaryRightSpriteSheet;
@@ -72,7 +74,6 @@ namespace Quest.Characters.Hero
             this.attackingRightSpriteSheet = attackingRightSpriteSheet;
 
             this.jumpsLeft = MaxJumps;
-            this.previousKey = Keys.None;
             this.jumping = false;
             this.attacking = false;
             this.finishAttacking = false;
@@ -108,12 +109,13 @@ namespace Quest.Characters.Hero
             this.HandleInput();
             this.HandleSpriteSheet();
             this.HandleAttacks(level.Enemies);
+            this.HandleEnemies(level.Enemies);
         }
 
         public override void Draw(Camera camera)
         {
             camera.Begin();
-            this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y);
+            this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y, this.Color);
             camera.End();
         }
 
@@ -157,7 +159,6 @@ namespace Quest.Characters.Hero
 
             if (this.attacking)
             {
-                //System.Diagnostics.Debug.WriteLine("Frame: {0}", this.currentSpriteSheet.FrameCounter.Frame);
                 state = HeroState.Attacking;
                 if (this.previousState != HeroState.Attacking)
                 {
@@ -208,7 +209,7 @@ namespace Quest.Characters.Hero
             this.previousState = state;
         }
 
-        private void HandleAttacks(List<MovingSprite> enemies)
+        private void HandleAttacks(List<Character> enemies)
         {
             if (!this.attacking || this.currentSpriteSheet.CurrentSprite == 0)
             {
@@ -232,9 +233,9 @@ namespace Quest.Characters.Hero
             }
         }
 
-        private bool AttackLanded(MovingSprite enemy)
+        private bool AttackLanded(Character enemy)
         {
-            if (enemy.Damaged)
+            if (enemy.HealthState == HealthState.Damaged || enemy.HealthState == HealthState.Dying)
             {
                 return false;
             }
@@ -244,6 +245,31 @@ namespace Quest.Characters.Hero
                 : new Rectangle(this.Rectangle.X + 20, this.Rectangle.Y, this.Rectangle.Width, this.Rectangle.Height);
 
             return attackRectangle.Intersects(enemy.Rectangle);
+        }
+
+        private void HandleEnemies(List<Character> enemies)
+        {
+            if (this.attacking || this.HealthState == HealthState.Damaged)
+            {
+                return;
+            }
+
+            foreach (var enemy in enemies) 
+            {
+                if (enemy.HealthState == HealthState.Damaged || enemy.HealthState == HealthState.Dying)
+                {
+                    continue;
+                }
+                else if (enemy.Rectangle.Intersects(this.Rectangle))
+                {
+                    this.DamageForce = enemy.Rectangle.Left > this.Rectangle.Left
+                        ? enemy.DamageForce = new Vector2(-50, -20)
+                        : enemy.DamageForce = new Vector2(50, -20);
+
+                    this.Damage();
+                    return;
+                }
+            }
         }
 
         public override void VerticalCollisionHandler()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
+using Quest.Characters;
 using Quest.Levels;
 
 using System;
@@ -39,7 +40,7 @@ namespace Quest.Physics
             // the new velocity doesn't exceed the max velocity in either direction
             newVelocityX = MathHelper.Clamp(newVelocityX, -movable.MaxVelocity.X, movable.MaxVelocity.X);
 
-            if (movable.Damaged && movable.DamageForce.X != 0)
+            if ((movable.HealthState == HealthState.Damaged || movable.HealthState == HealthState.Dying) && movable.DamageForce.X != 0)
             {
                 newVelocityX += movable.DamageForce.X;
                 movable.DamageForce = new Vector2(0, movable.DamageForce.Y);
@@ -82,7 +83,7 @@ namespace Quest.Physics
             var newVelocityY = MathHelper.Clamp(movable.Velocity.Y + movable.Force.Y + movable.Gravity, -movable.MaxVelocity.Y, movable.MaxVelocity.Y);
             movable.Velocity = new Vector2(movable.Velocity.X, newVelocityY);
 
-            if (movable.Damaged && movable.DamageForce.Y != 0)
+            if ((movable.HealthState == HealthState.Damaged || movable.HealthState == HealthState.Dying) && movable.DamageForce.Y != 0)
             {
                 newVelocityY += movable.DamageForce.Y;
                 movable.DamageForce = new Vector2(movable.DamageForce.X, 0);

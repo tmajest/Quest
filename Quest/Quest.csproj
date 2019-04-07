@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Characters\HealthState.cs" />
     <Compile Include="Characters\Hero\HeroState.cs" />
     <Compile Include="Characters\Enemies\Medusa.cs" />
     <Compile Include="Characters\Hero\HeroSpriteHelpers.cs" />
@@ -54,7 +55,7 @@
     <Compile Include="Characters\Enemies\Bug.cs" />
     <Compile Include="Characters\Direction.cs" />
     <Compile Include="Characters\Hero\Hero.cs" />
-    <Compile Include="Characters\MovingSprite.cs" />
+    <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\SpriteSheet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Game1.cs" />

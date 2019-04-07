@@ -29,7 +29,7 @@ namespace Quest.Levels
 
         public Rectangle SourceRectangle => new Rectangle(0, 0, columns * TileWidth, rows * TileHeight);
         public PhysicsEngine PhysicsEngine { get; private set; }
-        public List<MovingSprite> Enemies { get; private set; }
+        public List<Character> Enemies { get; private set; }
 
         private TileFactory tileFactory;
         private EnemyFactory enemyFactory;
@@ -42,7 +42,7 @@ namespace Quest.Levels
             this.enemyFactory = enemyFactory;
             this.level = level;
             this.PhysicsEngine = new PhysicsEngine(this);
-            this.Enemies = new List<MovingSprite>();
+            this.Enemies = new List<Character>();
 
             this.parseGrid();
         }

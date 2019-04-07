@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using System.IO;
@@ -23,13 +24,13 @@ namespace Quest
         private const int ScreenHeight = 720;
         private FrameCounter frameCounter;
 
-        private Color backgroundColor = new Color(70, 100, 120);
+        private Color backgroundColor = new Color(34, 32, 52);
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Hero hero;
         private Level level;
         private Camera camera;
-        private List<MovingSprite> enemies;
+        private List<Character> enemies;
 
         public Game1()
         {
@@ -108,7 +109,9 @@ namespace Quest
             frameCounter.Update();
             hero.Update(level);
             enemies.ForEach(enemy => enemy.Update(this.level));
+            enemies.RemoveAll(enemy => enemy.HealthState == HealthState.Dead);
             camera.Update(hero.Velocity, hero.Rectangle);
+
 
             base.Update(gameTime);
         }

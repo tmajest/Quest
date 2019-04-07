@@ -68,7 +68,7 @@ namespace Quest.Characters
             }
         }
 
-        public void Draw(Camera camera, int x, int y)
+        public void Draw(Camera camera, int x, int y, Color color)
         {
             var width = this.texture.Width / this.columns;
             var height = this.texture.Height / this.rows;
@@ -79,7 +79,7 @@ namespace Quest.Characters
             var sourceRectangle = new Rectangle(width * column, height * row, width, height);
             var destinationRectangle = new Rectangle(x, y, width, height);
 
-            camera.Draw(this.texture, destinationRectangle, sourceRectangle, Color.White);
+            camera.Draw(this.texture, destinationRectangle, sourceRectangle, color);
         }
     }
 }

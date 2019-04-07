@@ -87,7 +87,7 @@ namespace Quest
                 destinationRectangle.Width,
                 destinationRectangle.Height);
 
-            this.SpriteBatch.Draw(texture, cameraRectangle, sourceRectangle, this.Filter);
+            this.SpriteBatch.Draw(texture, cameraRectangle, sourceRectangle, color);
         }
     }
 }

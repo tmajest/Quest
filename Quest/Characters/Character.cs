@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 
 namespace Quest.Characters
 {
-    internal class MovingSprite : IMovable
+    internal class Character : IMovable
     {
-        private static readonly int TotalInvincibilityFrames = 30;
-
         protected float x;
         protected float y;
         protected float velocityX;
@@ -28,6 +26,7 @@ namespace Quest.Characters
         protected float damageForceX { get; set; }
         protected float damageForceY { get; set; }
         protected Direction direction;
+        public Color Color { get; set; }
 
         private int width;
         private int height;
@@ -64,21 +63,26 @@ namespace Quest.Characters
             set { this.damageForceX = value.X; this.damageForceY = value.Y; }
         }
 
-        public bool Damaged { get; set; }
-        private int invincibleFrames = 0;
+        public int Health { get; set; }
+        public HealthState HealthState { get; set; }
+        public HealthState PreviousHealthState { get; set; }
+
+        private int invincibleFrames;
+        private int totalInvincibilityFrames;
 
         public virtual float Gravity => PhysicsConstants.Gravity;
         public virtual float Friction => PhysicsConstants.Friction;
 
         public Rectangle Rectangle => new Rectangle((int) this.x, (int) this.y, this.width, this.height);
 
-        public MovingSprite(
+        public Character(
             Vector2 position,
             Vector2 velocity,
             Vector2 maxVelocity,
             Vector2 force,
             PhysicsEngine physicsEngine,
             int width, int height, 
+            int health,int totalInvincibilityFrames,
             Direction direction)
         {
             this.x = position.X;
@@ -94,32 +98,52 @@ namespace Quest.Characters
 
             this.width = width;
             this.height = height;
+            this.Health = health;
+            this.invincibleFrames = 0;
+            this.totalInvincibilityFrames = totalInvincibilityFrames;
             this.direction = direction;
+            this.Color = Color.White;
+
+            this.HealthState = HealthState.Normal;
+            this.PreviousHealthState = this.HealthState;
         }
 
 
         public virtual void Update(Level level)
         {
+            this.PreviousHealthState = this.HealthState;
+
             physicsEngine.Move(this);
-            if (this.Damaged && invincibleFrames > 0)
+            if (this.HealthState == HealthState.Damaged && invincibleFrames > 0)
             {
                 invincibleFrames--;
                 if (invincibleFrames == 0)
                 {
-                    this.Damaged = false;
+                    this.HealthState = HealthState.Normal;
+                    this.Color = Color.White;
                 }
             }
         }
 
         public virtual void Draw(Camera camera)
         {
-            physicsEngine.Move(this);
         }
 
         public void Damage()
         {
-            this.Damaged = true;
-            this.invincibleFrames = TotalInvincibilityFrames;
+            if (this.HealthState != HealthState.Dying && this.HealthState != HealthState.Damaged)
+            {
+                this.Color = Color.Red;
+                this.HealthState = HealthState.Damaged;
+                this.invincibleFrames = totalInvincibilityFrames;
+                this.Health--;
+
+                if (this.Health == 0)
+                {
+                    this.HealthState = HealthState.Dying;
+                    this.Color = Color.White;
+                }
+            }
         }
 
         public virtual void HorizontalCollisionHandler()
