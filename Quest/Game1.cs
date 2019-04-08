@@ -67,7 +67,8 @@ namespace Quest
 
             var textureMap = new Dictionary<char, Texture2D>
             {
-                {'G', GrassTile.GetTexture(Content) },
+                {'G', GrassTile.GetTopTexture(Content) },
+                {'g', GrassTile.GetBottomTexture(Content) },
                 {'D', DirtTile.GetTexture(Content) },
                 {'T', TreeTile.GetTexture(Content) }
             };
@@ -110,7 +111,7 @@ namespace Quest
             hero.Update(level);
             enemies.ForEach(enemy => enemy.Update(this.level));
             enemies.RemoveAll(enemy => enemy.HealthState == HealthState.Dead);
-            camera.Update(hero.Velocity, hero.Rectangle);
+            camera.Update(level, hero.Velocity, hero.Rectangle);
 
 
             base.Update(gameTime);

@@ -17,8 +17,8 @@ namespace Quest.Characters.Hero
 {
     internal class Hero : Character
     {
-        private static readonly int TotalInvincibilityFrames = 30;
-        private static readonly int MaxHealth = 3;
+        private static readonly int TotalInvincibilityFrames = 40;
+        private static readonly int MaxHealth = 5;
         private static readonly int MaxVelocityX = 5;
         private static readonly int MaxVelocityY = 20;
 
@@ -41,6 +41,7 @@ namespace Quest.Characters.Hero
         private SpriteSheet jumpingRightSpriteSheet;
         private SpriteSheet attackingLeftSpriteSheet;
         private SpriteSheet attackingRightSpriteSheet;
+        private SpriteSheet healthSprite;
 
         private HeroState previousState;
         private int jumpsLeft;
@@ -57,6 +58,7 @@ namespace Quest.Characters.Hero
             SpriteSheet jumpingRightSpriteSheet,
             SpriteSheet attackingLeftSpriteSheet,
             SpriteSheet attackingRightSpriteSheet,
+            SpriteSheet healthSprite,
             Vector2 position,
             PhysicsEngine physicsEngine,
             int width, int height,
@@ -72,6 +74,7 @@ namespace Quest.Characters.Hero
             this.jumpingRightSpriteSheet = jumpingRightSpriteSheet;
             this.attackingLeftSpriteSheet = attackingLeftSpriteSheet;
             this.attackingRightSpriteSheet = attackingRightSpriteSheet;
+            this.healthSprite = healthSprite;
 
             this.jumpsLeft = MaxJumps;
             this.jumping = false;
@@ -95,6 +98,7 @@ namespace Quest.Characters.Hero
                 HeroSpriteHelpers.GetJumpingRightSpriteSheet(content),
                 HeroSpriteHelpers.GetAttackingLeftSpriteSheet(content),
                 HeroSpriteHelpers.GetAttackingRightSpriteSheet(content),
+                HeroSpriteHelpers.GetHealthSprite(content),
                 position,
                 physicsEngine,
                 HeroWidth,
@@ -117,6 +121,27 @@ namespace Quest.Characters.Hero
             camera.Begin();
             this.currentSpriteSheet.Draw(camera, (int) this.x, (int) this.y, this.Color);
             camera.End();
+
+            this.DrawHealth(camera);
+        }
+
+        private void DrawHealth(Camera camera)
+        {
+            var startX = 50;
+            var startY = 30;
+            var space = 2;
+
+            camera.SpriteBatch.Begin();
+            for (var i = 0; i < this.Health; i++)
+            {
+                var rect = new Rectangle(
+                    startX + ((this.healthSprite.Width + space) * i), 
+                    startY, 
+                    this.healthSprite.Width, 
+                    this.healthSprite.Height);
+                camera.SpriteBatch.Draw(this.healthSprite.Texture, rect, Color.White);
+            }
+            camera.SpriteBatch.End();
         }
 
         private void HandleInput()
@@ -223,11 +248,11 @@ namespace Quest.Characters.Hero
                     enemy.Damage();
                     if (this.direction == Direction.Right)
                     {
-                        enemy.DamageForce = new Vector2(50, -20);
+                        enemy.DamageForce = new Vector2(50, -10);
                     }
                     else
                     {
-                        enemy.DamageForce = new Vector2(-50, -20);
+                        enemy.DamageForce = new Vector2(-50, -10);
                     }
                 }
             }

@@ -28,6 +28,10 @@ namespace Quest.Levels.Tiles
             {
                 return new GrassTile(textureMap['G'], x, y);
             }
+            else if (c == 'g')
+            {
+                return new GrassTile(textureMap['g'], x, y);
+            }
             else if (c == 'D')
             {
                 return new DirtTile(textureMap['D'], x, y);

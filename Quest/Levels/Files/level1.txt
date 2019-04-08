@@ -1,18 +1,53 @@
-16 158
-                                                                                                 
-                                                                                        
-                                                                                          
-                                                   T    T                                  
-                                                                                           
- T                                               GGGGGGGGG               DD                
-        GGG     T           GG     T      T    GGG           GGGGGG     DDD   T                                                T
-GGGG  GGGGGGGGG      B   G  GG  G             GGGG   B            B    GDDD                               
-GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                                        DDDDDDDDD                T 
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                          DDDDD              DDD           B       D
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD      T           T    D                  DDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD        B          DD                  DDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                  DDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD   DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-                                                                                       
+52 135
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+g            DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                                              
+g                                                                   DDDDDDDDDDDD                T                    T           T
+g T                       T                   T                     DDDDDDDDDDDD
+g                                                                   DDDDDDDDDDDD
+g                                                      G            DDDDDDDDDDDD            G    B         G     G    B           B   G
+g                         B      G   B                 G            DDDDDDDDDDDD            GGGGGGGGGGGGGGGg     gGGGGGGGGGGGGGGGGGGGGg
+gGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGgGGGGGGGGGGGGGGGGGGGGGg            DDDD                    gggggggggggggggg     gggggggggggggggggggggg
+gggggggggggggggggggggggggggggggggggggggggggggggggggggggg            DDDD              GGGGGGGDDDDDDDDDDDDDDD     DDDDDDDDDDDDDDDDDDDDDD
+ggggggggggggggggggggggggggggggggggggggggggggggggggggggggDDDDDDDD    DDDD              DDDDDDDDDDDDDDDDDDDDDD     DDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD    DDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                         DDDDDDDDDDDDG
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                         DDDDDDDDDDDDg
+D                                                                   DDDDDDDDDDDDg
+D                                                                   DDDDDDDDDDDDg               GG
+D                                                 GG                DDDDDDDDDDDDg    gg    B    gg
+D                                                 gg        B       DDDDDDDDDDDDgggggggggggggggggg            T                   gg
+D  D                                              ggGGGGGGGGGGGGGGGGDDDDDDDDDDDDgggggggggggggggggGGGGG                            gg
+D  D                             B           B    DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDgggggggggggggggggggggg                            gg
+D  DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDgggggggggggggggggggggg                            gg
+D  DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD     GGGGGGGGG          T   gg
+D  DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD     ggggggggg              gg      
+D  DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD                            gg      
+D                                                                                                                                 gg
+D                                                                                                                      GGGGGGGGGGGgg
+D                                                                                                                      ggggggggggggg
+D                                                                                                          G      B    ggDDDDDDDDDDD
+DDD                                                                                            GGGGGGG     gGGGGGGGGGGGggDDDDDDDDDDD
+D                    GGGGGG    GGGGGGGGGGGGG                                                   ggggggg     ggggggggggggggDDDDDDDDDDD
+D                    gggggg    ggggggggggggg                                              GGGGGggggggg     DDDDDDDDDDDDDDDDDDDDDDDDD
+D                  GGgg                                                                   gggggggggggg     DDDDDDDDDDDDDDDDDDDDDDDDD
+D                  gg                                                   T                 gggggggggggg     DDDDDDDDDDDDDDDDDDDDDDDDD
+D              GGGGgg                                                            GGGGGGG  gggggggggggg     DDDDDDDDDDDDDDDDDDDDDDDDD
+D              gggggg                                                            ggggggg  gggggggggggg     DDDDDDDDDDDDDDDDDDDDDDDDD
+D      B    GGGgggggg               B      g      T                              ggggggg
+DGGGGGGGGGGGgggggggggGGGGGGGGGGGGGGGGGGGGGGg                         ggggggggggggggggggg
+Dggggggggggggggggggggggggggggggggggggggggggg                         DDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD      B               DDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

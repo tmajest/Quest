@@ -75,10 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Sprites\Bug\bug-death-left.png" />
+    <Content Include="Content\Sprites\Bug\bug-death-right.png" />
     <Content Include="Content\Sprites\Bug\bug-left.png" />
     <Content Include="Content\Sprites\Bug\bug-right.png" />
     <Content Include="Content\Sprites\Hero\attacking-left.png" />
     <Content Include="Content\Sprites\Hero\attacking-right.png" />
+    <Content Include="Content\Sprites\Hero\heart.png" />
     <Content Include="Content\Sprites\Hero\jumping-left.png" />
     <Content Include="Content\Sprites\Hero\jumping-right.png" />
     <Content Include="Content\Sprites\Hero\running-left.png" />
@@ -90,7 +93,11 @@
     <Content Include="Content\Tiles\dirt.png" />
     <Content Include="Content\Tiles\dirt3.png" />
     <Content Include="Content\Tiles\grass.png" />
+    <Content Include="Content\Tiles\grass2.png" />
     <Content Include="Content\Tiles\grass3.png" />
+    <Content Include="Content\Tiles\smalldirt3.png" />
+    <Content Include="Content\Tiles\smallgrass2.png" />
+    <Content Include="Content\Tiles\smallgrass3.png" />
     <Content Include="Content\Tiles\tree.png" />
     <Content Include="Content\Tiles\tree3.png" />
     <Content Include="Icon.ico" />

@@ -16,8 +16,8 @@ namespace Quest.Levels
 {
     internal class Level
     {
-        private static readonly int TileWidth = 64;
-        private static readonly int TileHeight = 64;
+        private static readonly int TileWidth = 32;
+        private static readonly int TileHeight = 32;
 
         private ContentManager content;
         private String path;
@@ -27,7 +27,7 @@ namespace Quest.Levels
         private int rows;
         private int columns;
 
-        public Rectangle SourceRectangle => new Rectangle(0, 0, columns * TileWidth, rows * TileHeight);
+        public Rectangle Rectangle => new Rectangle(0, 0, columns * TileWidth, rows * TileHeight);
         public PhysicsEngine PhysicsEngine { get; private set; }
         public List<Character> Enemies { get; private set; }
 

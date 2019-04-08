@@ -13,7 +13,7 @@ namespace Quest.Levels.Tiles
 {
     internal class DirtTile : Tile
     {
-        public static readonly string TexturePath = Path.Combine("Tiles", "dirt3").ToString();
+        public static readonly string TexturePath = Path.Combine("Tiles", "smalldirt3").ToString();
 
         public override bool Passable => false;
 

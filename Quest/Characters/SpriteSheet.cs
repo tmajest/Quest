@@ -12,7 +12,7 @@ namespace Quest.Characters
 {
     internal class SpriteSheet
     {
-        private Texture2D texture;
+        public Texture2D Texture { get; private set; }
 
         private int rows;
         private int columns;
@@ -24,10 +24,12 @@ namespace Quest.Characters
 
         public bool Done { get; private set; }
         public int CurrentSprite { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
         public SpriteSheet(Texture2D texture, int frameTime, int rows, int columns, bool loop)
         {
-            this.texture = texture;
+            this.Texture = texture;
             this.rows = rows;
             this.columns = columns;
             this.totalSpritesPerSheet = rows * columns;
@@ -37,6 +39,8 @@ namespace Quest.Characters
 
             this.Done = false;
             this.CurrentSprite = 0;
+            this.Width = this.Texture.Width / this.columns;
+            this.Height = this.Texture.Height / this.rows;
         }
 
         public void Reset()
@@ -70,16 +74,13 @@ namespace Quest.Characters
 
         public void Draw(Camera camera, int x, int y, Color color)
         {
-            var width = this.texture.Width / this.columns;
-            var height = this.texture.Height / this.rows;
-
             var row = this.CurrentSprite / this.columns;
             var column = this.CurrentSprite % this.columns;
 
-            var sourceRectangle = new Rectangle(width * column, height * row, width, height);
-            var destinationRectangle = new Rectangle(x, y, width, height);
+            var sourceRectangle = new Rectangle(Width * column, Height * row, Width, Height);
+            var destinationRectangle = new Rectangle(x, y, Width, Height);
 
-            camera.Draw(this.texture, destinationRectangle, sourceRectangle, color);
+            camera.Draw(this.Texture, destinationRectangle, sourceRectangle, color);
         }
     }
 }

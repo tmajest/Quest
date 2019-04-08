@@ -13,7 +13,8 @@ namespace Quest.Levels.Tiles
 {
     internal class GrassTile : Tile
     {
-        public static readonly string TexturePath = Path.Combine("Tiles", "grass3").ToString();
+        public static readonly string TopGrassPath = Path.Combine("Tiles", "smallgrass3").ToString();
+        public static readonly string BottomGrassPath = Path.Combine("Tiles", "smallgrass2").ToString();
 
         public override bool Passable => false;
 
@@ -21,9 +22,14 @@ namespace Quest.Levels.Tiles
         {
         }
 
-        public static Texture2D GetTexture(ContentManager content)
+        public static Texture2D GetTopTexture(ContentManager content)
         {
-            return content.Load<Texture2D>(TexturePath);
+            return content.Load<Texture2D>(TopGrassPath);
+        }
+
+        public static Texture2D GetBottomTexture(ContentManager content)
+        {
+            return content.Load<Texture2D>(BottomGrassPath);
         }
     }
 }

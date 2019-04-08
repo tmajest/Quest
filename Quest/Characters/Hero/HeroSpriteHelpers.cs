@@ -36,6 +36,8 @@ namespace Quest.Characters.Hero
         private static readonly int AttackingSheetColumns = 3;
         private static int AttackingSpriteTime = 6;
 
+        private static readonly string HealthSpritePath = Path.Combine("Sprites", "Hero", "heart").ToString();
+
 
         public static SpriteSheet GetStationaryLeftSpriteSheet(ContentManager content)
         {
@@ -83,6 +85,12 @@ namespace Quest.Characters.Hero
         {
             var texture = content.Load<Texture2D>(AttackingRightPath);
             return new SpriteSheet(texture, AttackingSpriteTime, SpriteSheetRows, AttackingSheetColumns, loop: false);
+        }
+
+        public static SpriteSheet GetHealthSprite(ContentManager content)
+        {
+            var texture = content.Load<Texture2D>(HealthSpritePath);
+            return new SpriteSheet(texture, AttackingSpriteTime, 1, 1, loop: true);
         }
     }
 }

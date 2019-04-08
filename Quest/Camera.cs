@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Quest.Characters;
+
+using Quest.Levels;
 
 using System;
 using System.Collections.Generic;
@@ -29,26 +30,26 @@ namespace Quest
             this.ScreenHeight = screenHeight;
         }
 
-        public void Update(Vector2 playerSpeed, Rectangle playerRectangle)
+        public void Update(Level level, Vector2 playerSpeed, Rectangle playerRectangle)
         {
             var playerRelativePositionX = playerRectangle.X - this.X * 1.0;
-            if (playerRelativePositionX < ScreenWidth * 0.30)
+            if (playerRelativePositionX < ScreenWidth * 0.20)
             {
-                this.X = playerRectangle.X - (ScreenWidth * 0.3f);
+                this.X = Math.Max(0, playerRectangle.X - (ScreenWidth * 0.2f));
             }
-            else if (playerRelativePositionX + playerRectangle.Width > ScreenWidth * 0.70)
+            else if (playerRelativePositionX + playerRectangle.Width > ScreenWidth * 0.80)
             {
-                this.X = playerRectangle.Right - (ScreenWidth * 0.7f);
+                this.X = Math.Min(level.Rectangle.Right - ScreenWidth, playerRectangle.Right - (ScreenWidth * 0.8f));
             }
 
             var playerRelativePositionY = playerRectangle.Y - this.Y * 1.0;
-            if (playerRelativePositionY < ScreenHeight * 0.1)
+            if (playerRelativePositionY < ScreenHeight * 0.2)
             {
-                this.Y = playerRectangle.Y - (ScreenHeight * 0.1f);
+                this.Y = Math.Max(0, playerRectangle.Y - (ScreenHeight * 0.2f));
             }
-            else if (playerRelativePositionY + playerRectangle.Height > ScreenHeight * 0.80)
+            else if (playerRelativePositionY + playerRectangle.Height > ScreenHeight * 0.70)
             {
-                this.Y = playerRectangle.Bottom - (ScreenHeight * 0.8f);
+                this.Y = Math.Min(level.Rectangle.Bottom - ScreenHeight, playerRectangle.Bottom - (ScreenHeight * 0.7f));
             }
         }
 
